@@ -7,6 +7,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
+#include "SceneTransition.h"
 #include "DrawDebugHelpers.h"
 
 #define OUT
@@ -78,14 +79,17 @@ void AMainCharacter::Tick(float DeltaTime)
 	);
 
 	AActor* ActorHit = LineTraceHit.GetActor();
-
+	
 	if (ActorHit)
 	{
 		m_bIsVisible = true;
+		LevelChangeName = ActorHit->FindComponentByClass<USceneTransition>()->GetLevelName();
 	}
 	else {
 		m_bIsVisible = false;
 	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Hello"))
 	
 }
 
@@ -119,9 +123,7 @@ void AMainCharacter::ChangeLevel()
 
 	if (m_bIsVisible == true)
 	{
-		FString transferLevel = "Env_Level_Denial";
-		UGameplayStatics::OpenLevel(GetWorld(), FName(*transferLevel), false);
-		UE_LOG(LogTemp, Warning, TEXT("E Clicked"));
+		UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelChangeName), false);
 	}
 }
 

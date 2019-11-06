@@ -15,6 +15,7 @@ class DEVOIDPROJECT_API USceneTransition : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	USceneTransition();
+	FString GetLevelName();
 
 protected:
 	// Called when the game starts
@@ -24,6 +25,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void ChangeLevel();
-		
+	
+	UPROPERTY(EditAnywhere)
+		FString m_strLevelName;
 };

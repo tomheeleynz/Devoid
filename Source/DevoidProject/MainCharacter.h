@@ -43,7 +43,7 @@ public:
 		bool m_bIsVisible = false;
 	
 
+	FString LevelChangeName;
 private:
 	float m_fReach = 200.0f;
-
 };

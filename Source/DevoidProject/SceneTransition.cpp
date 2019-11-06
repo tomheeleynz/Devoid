@@ -18,20 +18,16 @@ USceneTransition::USceneTransition()
 }
 
 
+FString USceneTransition::GetLevelName()
+{
+	return m_strLevelName;
+}
+
+
 // Called when the game starts
 void USceneTransition::BeginPlay()
 {
 	Super::BeginPlay();
-
-	FString name = GetOwner()->GetName();
-	
-	FString levelName = GetWorld()->GetName();
-	FString currentLevel = "Bedroom1_Level";
-
-	if (levelName == currentLevel)
-	{
-		UGameplayStatics::OpenLevel(GetWorld(), "Env_Level_Denial", false);
-	}
 
 	// UE_LOG(LogTemp, Warning, TEXT("Component Loaded %s in level %s"), *name, *levelName);
 	
