@@ -5,6 +5,10 @@
 #include "Components/InputComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Controller.h"
+#include "GameFramework/Actor.h"
+#include "DrawDebugHelpers.h"
+
+#define OUT
 
 // Sets default values
 AMainCharacter::AMainCharacter()
@@ -32,6 +36,52 @@ void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Get Player View Point
+	FVector ViewPointLocation;
+	FRotator ViewPointRotation;
+
+	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+		OUT ViewPointLocation,
+		OUT ViewPointRotation
+	);
+
+	//UE_LOG(LogTemp, Warning, TEXT("Location: %s Rotation: %s"), *ViewPointLocation.ToString(), *ViewPointRotation.ToString());
+
+	FVector lineTraceEnd = ViewPointLocation + ViewPointRotation.Vector() * m_fReach;
+
+	DrawDebugLine(
+		GetWorld(),
+		ViewPointLocation,
+		lineTraceEnd,
+		FColor(255, 0, 0),
+		false,
+		0.0f,
+		0.0f,
+		10.0f
+	);
+	
+	/// Set Up Query Parameters
+	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
+
+
+	/// Line Tracing
+	FHitResult LineTraceHit;
+
+	GetWorld()->LineTraceSingleByObjectType(
+		OUT LineTraceHit,
+		ViewPointLocation,
+		lineTraceEnd,
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		TraceParams
+	);
+
+	AActor* ActorHit = LineTraceHit.GetActor();
+
+	if (ActorHit)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *(ActorHit->GetName()));
+	}
+	
 }
 
 // Called to bind functionality to input
@@ -44,6 +94,7 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMainCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &AMainCharacter::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &AMainCharacter::AddControllerPitchInput);
+	PlayerInputComponent->BindAction("EnterWorld", IE_Released, this, &AMainCharacter::ChangeLevel);
 }
 
 void AMainCharacter::MoveFoward(float Value)
@@ -56,5 +107,10 @@ void AMainCharacter::MoveRight(float Value)
 {
 	FVector Direction = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
 	AddMovementInput(Direction, Value);
+}
+
+void AMainCharacter::ChangeLevel()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Input Working"));
 }
 

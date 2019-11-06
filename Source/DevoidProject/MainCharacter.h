@@ -32,7 +32,14 @@ public:
 		void MoveFoward(float Value);
 	UFUNCTION()
 		void MoveRight(float Value);
+	UFUNCTION()
+		void ChangeLevel();
+	
 	UPROPERTY(VisibleAnywhere)
 		UCameraComponent* FPSCameraComponent;
+
+private:
+	float m_fReach = 200.0f;
+
 
 };
