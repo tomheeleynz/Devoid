@@ -6,7 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Actor.h"
-
+#include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
 
 #define OUT
@@ -116,6 +116,12 @@ void AMainCharacter::MoveRight(float Value)
 
 void AMainCharacter::ChangeLevel()
 {
-	
+
+	if (m_bIsVisible == true)
+	{
+		FString transferLevel = "Env_Level_Denial";
+		UGameplayStatics::OpenLevel(GetWorld(), FName(*transferLevel), false);
+		UE_LOG(LogTemp, Warning, TEXT("E Clicked"));
+	}
 }
 
