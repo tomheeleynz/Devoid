@@ -52,17 +52,17 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	FVector lineTraceEnd = ViewPointLocation + ViewPointRotation.Vector() * m_fReach;
 
-	DrawDebugLine(
-		GetWorld(),
-		ViewPointLocation,
-		lineTraceEnd,
-		FColor(255, 0, 0),
-		false,
-		0.0f,
-		0.0f,
-		10.0f
-	);
-	
+	//DrawDebugLine(
+	//	GetWorld(),
+	//	ViewPointLocation,
+	//	lineTraceEnd,
+	//	FColor(255, 0, 0),
+	//	false,
+	//	0.0f,
+	//	0.0f,
+	//	10.0f
+	//);
+	//
 	/// Set Up Query Parameters
 	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
 
