@@ -88,9 +88,6 @@ void AMainCharacter::Tick(float DeltaTime)
 	else {
 		m_bIsVisible = false;
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Hello"))
-	
 }
 
 // Called to bind functionality to input
