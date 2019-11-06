@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/Widget.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "MainCharacter.generated.h"
@@ -27,6 +28,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
+
 	// Input Functions
 	UFUNCTION()
 		void MoveFoward(float Value);
@@ -37,9 +40,11 @@ public:
 	
 	UPROPERTY(VisibleAnywhere)
 		UCameraComponent* FPSCameraComponent;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=UIBoolean)
+		bool m_bIsVisible = false;
+	
 
 private:
 	float m_fReach = 200.0f;
-
 
 };

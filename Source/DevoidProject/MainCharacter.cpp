@@ -6,6 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Actor.h"
+
 #include "DrawDebugHelpers.h"
 
 #define OUT
@@ -28,6 +29,7 @@ AMainCharacter::AMainCharacter()
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 }
 
@@ -79,7 +81,10 @@ void AMainCharacter::Tick(float DeltaTime)
 
 	if (ActorHit)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit: %s"), *(ActorHit->GetName()));
+		m_bIsVisible = true;
+	}
+	else {
+		m_bIsVisible = false;
 	}
 	
 }
@@ -111,6 +116,6 @@ void AMainCharacter::MoveRight(float Value)
 
 void AMainCharacter::ChangeLevel()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Input Working"));
+	
 }
 
