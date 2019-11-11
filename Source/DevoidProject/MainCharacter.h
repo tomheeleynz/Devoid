@@ -36,7 +36,11 @@ public:
 		void MoveRight(float Value);
 	UFUNCTION()
 		void ChangeLevel();
-	
+
+		void Jump();
+
+		void StopJump();
+
 	UPROPERTY(VisibleAnywhere)
 		UCameraComponent* FPSCameraComponent;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=UIBoolean)

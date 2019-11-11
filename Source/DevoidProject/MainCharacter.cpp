@@ -48,24 +48,10 @@ void AMainCharacter::Tick(float DeltaTime)
 		OUT ViewPointRotation
 	);
 
-	//UE_LOG(LogTemp, Warning, TEXT("Location: %s Rotation: %s"), *ViewPointLocation.ToString(), *ViewPointRotation.ToString());
-
 	FVector lineTraceEnd = ViewPointLocation + ViewPointRotation.Vector() * m_fReach;
 
-	//DrawDebugLine(
-	//	GetWorld(),
-	//	ViewPointLocation,
-	//	lineTraceEnd,
-	//	FColor(255, 0, 0),
-	//	false,
-	//	0.0f,
-	//	0.0f,
-	//	10.0f
-	//);
-	//
 	/// Set Up Query Parameters
 	FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetOwner());
-
 
 	/// Line Tracing
 	FHitResult LineTraceHit;
@@ -101,6 +87,8 @@ void AMainCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("Turn", this, &AMainCharacter::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &AMainCharacter::AddControllerPitchInput);
 	PlayerInputComponent->BindAction("EnterWorld", IE_Released, this, &AMainCharacter::ChangeLevel);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AMainCharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &AMainCharacter::StopJump);
 }
 
 void AMainCharacter::MoveFoward(float Value)
@@ -117,10 +105,19 @@ void AMainCharacter::MoveRight(float Value)
 
 void AMainCharacter::ChangeLevel()
 {
-
 	if (m_bIsVisible == true)
 	{
 		UGameplayStatics::OpenLevel(GetWorld(), FName(*LevelChangeName), false);
 	}
+}
+
+void AMainCharacter::Jump()
+{
+	bPressedJump = true;
+}
+
+void AMainCharacter::StopJump()
+{
+	bPressedJump = false;
 }
 
